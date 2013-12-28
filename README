@@ -1,0 +1,3 @@
+DBorg is a chatbot written in the D programming language, which learns sentences and then makes associations between words based on where they appear in relation to one another. It then can reply to people using randomly-generated sentences based on its library of known lines.
+
+Although it is heavily based, in concept, on SeeBorg (which was in turn based on PyBorg), this is an original implementation of the bot and they share no code nor structure.
