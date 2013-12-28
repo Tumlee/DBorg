@@ -71,12 +71,7 @@ class CleanWord
     //============================================
     @property int numcontexts()
     {
-        int total = 0;
-
-        foreach(form; forms)
-            total += form.contexts.length;
-
-        return total;
+        return reduce!((a, b) => a + b.contexts.length)(0, forms);
     }
 }
 
