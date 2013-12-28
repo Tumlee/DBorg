@@ -127,23 +127,24 @@ class DBorg
     {
         //Pick a topic out of the input to reply to, the best one being
         //the one that exists, but generates the least number of contexts.
-        auto sen = input.split_sentence();
+        CleanWord choice;
 
-        foreach(ref wd; sen)
-            wd = wd.strip_punct();
-
-        sen = sen.filter!(a => a in cleanwords).array;
-
-        if(sen.empty())
-            return "";
-
-        CleanWord choice = cleanwords[sen[0]];
-
-        foreach(wd; sen[1 .. $])
+        foreach(wd; input.split_sentence())
         {
-            if(cleanwords[wd].numcontexts() < choice.numcontexts())
-                choice = cleanwords[wd];
+            auto cw = wd.strip_punct();
+
+            if(wd in cleanwords)
+            {
+                if(choice is null)
+                    choice = cleanwords[cw];
+
+                if(cleanwords[cw].numcontexts() < choice.numcontexts())
+                    choice = cleanwords[cw];
+            }
         }
+
+        if(choice is null)
+            return "";
 
         return say_topic(choice.forms[uniform(0, $)].name);
     }
