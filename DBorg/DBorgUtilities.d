@@ -69,7 +69,7 @@ class CleanWord
     //Returns the total number of contexts pointed
     //to by this CleanWord's forms.
     //============================================
-    int numcontexts()
+    @property int numcontexts()
     {
         int total = 0;
 

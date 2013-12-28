@@ -138,7 +138,7 @@ class DBorg
                 if(choice is null)
                     choice = cleanwords[cw];
 
-                if(cleanwords[cw].numcontexts() < choice.numcontexts())
+                if(cleanwords[cw].numcontexts < choice.numcontexts)
                     choice = cleanwords[cw];
             }
         }
