@@ -29,6 +29,10 @@ class DBorg
         if(sen.length < 2)
             return;
 
+        //Don't learn duplicate sentences.
+        if(sentences.canFind(sen))
+            return;
+
         sentences ~= sen;
 
         foreach(i; 0 .. sen.length)
