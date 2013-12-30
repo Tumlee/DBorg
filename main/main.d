@@ -1,4 +1,5 @@
 import std.stdio;
+import std.algorithm;
 import DBorg;
 
 string getparm(string args[], string name)
@@ -14,13 +15,7 @@ string getparm(string args[], string name)
 
 bool getswitch(string args[], string name)
 {
-    foreach(arg; args[1 .. $])
-    {
-        if(arg == name)
-            return true;
-    }
-
-    return false;
+    return args[1 .. $].canFind(name);
 }
 
 bool load_lines(DBorg bot, string filename)
