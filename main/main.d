@@ -53,6 +53,7 @@ void main(string args[])
     string replytopic = getparm(args, "--topic");
     string replyinput = getparm(args, "--reply");
     string filename = getparm(args, "--file");
+    bool statmode = getswitch(args, "--stats");
     bool learning = !getswitch(args, "--no-learning");
 
     if(filename is null)
@@ -69,6 +70,14 @@ void main(string args[])
     if(replyinput !is null)
     {
         writeln(bot.reply(replyinput));
+        return;
+    }
+
+    if(statmode)
+    {
+        writefln("%d words", bot.words.length);
+        writefln("%d cleanwords", bot.cleanwords.length);
+        writefln("%d sentences", bot.sentences.length);
         return;
     }
 
