@@ -29,6 +29,8 @@ class DBorg
         if(sen.length < 2)
             return;
 
+        sentences ~= sen;
+
         foreach(i; 0 .. sen.length)
         {
             //Build a new context.
