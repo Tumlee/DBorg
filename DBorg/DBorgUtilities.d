@@ -109,20 +109,5 @@ string strip_punct(string word)
 //==========================================
 string[] split_sentence(string input)
 {
-    string line;
-
-    //Copy the input into 'line', lowercasing
-    //everything and all newlines to whitespace.
-    foreach(c; input)
-    {
-        if(c == '\n' || c == '\r')
-            line ~= ' ';
-
-        else
-            line ~= c.toLower();
-    }
-
-    //Return the sentence split into tokens based on
-    //whitespace, excluding any empty words.
-    return line.splitter(' ').filter!(a => a.length).array;
+    return input.toLower.split;
 }
