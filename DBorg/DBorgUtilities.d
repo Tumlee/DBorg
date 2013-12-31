@@ -15,16 +15,21 @@ class Context
     string[] sentence;
     size_t position;
 
+    //==============================
+    //Constructor for Context class.
+    //==============================
+    this(string[] sen, size_t pos)
+    {
+        sentence = sen;
+        position = pos;
+    }
+
     //========================================
     //Return a duplicate of the given context.
     //========================================
     @property Context dup()
     {
-        auto context = new Context;
-        context.sentence = sentence;
-        context.position = position;
-
-        return context;
+        return new Context(sentence, position);
     }
 
     //====================================================

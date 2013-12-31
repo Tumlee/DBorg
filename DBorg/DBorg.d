@@ -38,9 +38,7 @@ class DBorg
         foreach(i; 0 .. sen.length)
         {
             //Build a new context.
-            auto context = new Context;
-            context.sentence = sen;
-            context.position = i;
+            auto context = new Context(sen, i);
 
             auto name = context.name;
 
