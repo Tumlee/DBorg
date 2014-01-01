@@ -1,5 +1,6 @@
 import std.stdio;
 import std.algorithm;
+import std.range;
 import DBorg;
 
 string getparm(string args[], string name)
@@ -41,6 +42,26 @@ bool load_lines(DBorg bot, string filename)
     return true;
 }
 
+bool save_lines(DBorg bot, string filename)
+{
+    File outfile;
+
+    try
+    {
+        outfile = File(filename, "w");
+    }
+    catch(std.exception.ErrnoException)
+    {
+        return false;
+    }
+
+    foreach(sentence; bot.sentences)
+         outfile.writeln(sentence.joiner(" ").array);
+
+    outfile.close();
+    return true;
+}
+
 void main(string args[])
 {
     auto bot = new DBorg;
@@ -50,6 +71,7 @@ void main(string args[])
     string filename = getparm(args, "--file");
     bool statmode = getswitch(args, "--stats");
     bool learning = !getswitch(args, "--no-learning");
+    bool savelines = getswitch(args, "--save-lines");
 
     if(filename is null)
         filename = "lines.txt";
@@ -90,4 +112,7 @@ void main(string args[])
         if(learning)
             bot.learn(input);
     }
+
+    if(savelines)
+        bot.save_lines(filename);
 }
