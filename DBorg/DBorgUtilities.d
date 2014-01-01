@@ -60,27 +60,6 @@ class Word
 }
 
 //==============================================
-//Represents a word that the bot knows, with the
-//punctuation stripped off.
-//==============================================
-class CleanWord
-{
-    //Words describing different forms of the base word.
-    //For example, a CleanWord called 'foo' may point to
-    //'foo', 'foo,' and 'foo!'
-    Word[] forms;
-
-    //============================================
-    //Returns the total number of contexts pointed
-    //to by this CleanWord's forms.
-    //============================================
-    @property int numcontexts()
-    {
-        return reduce!((a, b) => a + b.contexts.length)(0, forms);
-    }
-}
-
-//==============================================
 //Returns the argument with leading and trailing
 //punctuation stripped off.
 //==============================================

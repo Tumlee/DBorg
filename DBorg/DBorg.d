@@ -12,7 +12,7 @@ class DBorg
     //The words and sentences known by the bot.
     string[][] sentences;
     Word[string] words;
-    CleanWord[string] cleanwords;
+    Word[string] cleanwords;
 
     //Variable describing the likelihood that the bot
     //will switch to a different context.
@@ -53,10 +53,9 @@ class DBorg
             if(clean.length)
             {
                 if((clean in cleanwords) is null)
-                    cleanwords[clean] = new CleanWord;
+                    cleanwords[clean] = new Word;
 
-                if(!cleanwords[clean].forms.canFind(words[name]))
-                    cleanwords[clean].forms ~= words[name];
+                cleanwords[clean].contexts ~= context;
             }
 
             words[name].contexts ~= context;
@@ -131,7 +130,7 @@ class DBorg
     {
         //Pick a topic out of the input to reply to, the best one being
         //the one that exists, but generates the least number of contexts.
-        CleanWord choice;
+        Word choice;
 
         foreach(wd; input.split_sentence())
         {
@@ -142,7 +141,7 @@ class DBorg
                 if(choice is null)
                     choice = cleanwords[cw];
 
-                if(cleanwords[cw].numcontexts < choice.numcontexts)
+                if(cleanwords[cw].contexts.length < choice.contexts.length)
                     choice = cleanwords[cw];
             }
         }
@@ -150,6 +149,6 @@ class DBorg
         if(choice is null)
             return "";
 
-        return say_topic(choice.forms[uniform(0, $)].name);
+        return say_topic(choice.contexts[uniform(0, $)].name);
     }
 }
