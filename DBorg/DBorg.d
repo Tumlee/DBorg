@@ -136,7 +136,7 @@ class DBorg
         {
             auto cw = wd.strip_punct();
 
-            if(wd in cleanwords)
+            if(cw in cleanwords)
             {
                 if(choice is null)
                     choice = cleanwords[cw];
