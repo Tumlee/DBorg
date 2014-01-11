@@ -3,7 +3,7 @@ import std.algorithm;
 import std.range;
 import DBorg;
 
-string getparm(string args[], string name)
+string getParm(string args[], string name)
 {
     foreach(a; 1 .. args.length - 1)
     {
@@ -14,19 +14,19 @@ string getparm(string args[], string name)
     return null;
 }
 
-bool getswitch(string args[], string name)
+bool getSwitch(string args[], string name)
 {
     return args[1 .. $].canFind(name);
 }
 
-bool load_lines(DBorg bot, string filename)
+bool loadLines(DBorg bot, string fileName)
 {
     //Open the file.
-    File botfile;
+    File botFile;
 
     try
     {
-        botfile = File(filename, "r");
+        botFile = File(fileName, "r");
     }
     catch(std.exception.ErrnoException)
     {
@@ -35,20 +35,20 @@ bool load_lines(DBorg bot, string filename)
 
     string line;
 
-    while((line = botfile.readln()) !is null)
+    while((line = botFile.readln()) !is null)
         bot.learn(line);
 
-    botfile.close();
+    botFile.close();
     return true;
 }
 
-bool save_lines(DBorg bot, string filename)
+bool saveLines(DBorg bot, string fileName)
 {
-    File outfile;
+    File outFile;
 
     try
     {
-        outfile = File(filename, "w");
+        outFile = File(fileName, "w");
     }
     catch(std.exception.ErrnoException)
     {
@@ -56,9 +56,9 @@ bool save_lines(DBorg bot, string filename)
     }
 
     foreach(sentence; bot.sentences)
-         outfile.writeln(sentence.joiner(" ").array);
+         outFile.writeln(sentence.joiner(" ").array);
 
-    outfile.close();
+    outFile.close();
     return true;
 }
 
@@ -66,34 +66,34 @@ void main(string args[])
 {
     auto bot = new DBorg;
 
-    string replytopic = getparm(args, "--topic");
-    string replyinput = getparm(args, "--reply");
-    string filename = getparm(args, "--file");
-    bool statmode = getswitch(args, "--stats");
-    bool learning = !getswitch(args, "--no-learning");
-    bool savelines = getswitch(args, "--save-lines");
+    string paramTopic = getParm(args, "--topic");
+    string paramReply = getParm(args, "--reply");
+    string fileName = getParm(args, "--file");
+    bool statMode = getSwitch(args, "--stats");
+    bool learning = !getSwitch(args, "--no-learning");
+    bool saveEnabled = getSwitch(args, "--save-lines");
 
-    if(filename is null)
-        filename = "lines.txt";
+    if(fileName is null)
+        fileName = "lines.txt";
 
-    bot.load_lines(filename);
+    bot.loadLines(fileName);
 
-    if(replytopic !is null)
+    if(paramTopic !is null)
     {
-        writeln(bot.say_topic(replytopic));
+        writeln(bot.sayTopic(paramTopic));
         return;
     }
 
-    if(replyinput !is null)
+    if(paramReply !is null)
     {
-        writeln(bot.reply(replyinput));
+        writeln(bot.reply(paramReply));
         return;
     }
 
-    if(statmode)
+    if(statMode)
     {
         writefln("%d words", bot.words.length);
-        writefln("%d cleanwords", bot.cleanwords.length);
+        writefln("%d cleanwords", bot.cleanWords.length);
         writefln("%d sentences", bot.sentences.length);
         return;
     }
@@ -113,6 +113,6 @@ void main(string args[])
             bot.learn(input);
     }
 
-    if(savelines)
-        bot.save_lines(filename);
+    if(saveEnabled)
+        bot.saveLines(fileName);
 }

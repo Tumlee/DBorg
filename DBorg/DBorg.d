@@ -12,7 +12,7 @@ class DBorg
     //The words and sentences known by the bot.
     string[][] sentences;
     Word[string] words;
-    Word[string] cleanwords;
+    Word[string] cleanWords;
 
     //Variable describing the likelihood that the bot
     //will switch to a different context.
@@ -23,7 +23,7 @@ class DBorg
     //=============================================
     void learn(string input)
     {
-        auto sen = split_sentence(input);
+        auto sen = splitSentence(input);
 
         //Don't learn empty sentences or one-word sentences.
         if(sen.length < 2)
@@ -47,15 +47,15 @@ class DBorg
                 words[name] = new Word;
 
             //Build a new clean word if it doesn't already exist.
-            auto clean = name.strip_punct();
+            auto clean = name.stripPunct();
 
             //Be careful not to add any empty words to the dictionary.
             if(clean.length)
             {
-                if((clean in cleanwords) is null)
-                    cleanwords[clean] = new Word;
+                if((clean in cleanWords) is null)
+                    cleanWords[clean] = new Word;
 
-                cleanwords[clean].contexts ~= context;
+                cleanWords[clean].contexts ~= context;
             }
 
             words[name].contexts ~= context;
@@ -65,7 +65,7 @@ class DBorg
     //===========================================
     //Returns a random context of the given word.
     //===========================================
-    Context random_context(string name)
+    Context randomContext(string name)
     {
         return words[name].contexts[uniform(0, $)];
     }
@@ -74,27 +74,27 @@ class DBorg
     //If the bot knows the topic word, it will reply with
     //a randomly-generated sentence containing that word.
     //===================================================
-    string say_topic(string topic)
+    string sayTopic(string topic)
     {
         if((topic in words) is null)
             return "";
 
-        string[] outwords = [words[topic].name];
+        string[] outWords = [words[topic].name];
 
-        auto base = random_context(topic);
+        auto base = randomContext(topic);
 
         //Move forward through the list.
         for(auto context = base.dup; true; )
         {
             //Randomly recalculate context.
             if(uniform(0, 100) > sanity)
-                context = random_context(context.name).dup;
+                context = randomContext(context.name).dup;
 
             //Go to the next word, and break if we passed the end.
             if(context.position++ == context.sentence.length - 1)
                 break;
 
-            outwords ~= context.name;
+            outWords ~= context.name;
         }
 
         //Move backward through the list.
@@ -102,23 +102,23 @@ class DBorg
         {
             //Randomly recalculate context.
             if(uniform(0, 100) > sanity)
-                context = random_context(context.name).dup;
+                context = randomContext(context.name).dup;
 
             //Subtract one to move backward through the sentence.
             if(context.position-- == 0)
                 break;
 
             //Prepend the word to the sentence.
-            outwords = context.name ~ outwords;
+            outWords = context.name ~ outWords;
         }
 
         //Join the sentence into strings.
-        auto outline = outwords.joiner(" ").array;
+        auto outLine = outWords.joiner(" ").array;
 
         //Make that first character uppercase.
-        outline[0] = outline[0].toUpper();
+        outLine[0] = outLine[0].toUpper();
 
-        return outline.to!string();
+        return outLine.to!string();
     }
 
     //===========================================================
@@ -132,23 +132,23 @@ class DBorg
         //the one that exists, but generates the least number of contexts.
         Word choice;
 
-        foreach(wd; input.split_sentence())
+        foreach(wd; input.splitSentence())
         {
-            auto cw = wd.strip_punct();
+            auto cw = wd.stripPunct();
 
-            if(cw in cleanwords)
+            if(cw in cleanWords)
             {
                 if(choice is null)
-                    choice = cleanwords[cw];
+                    choice = cleanWords[cw];
 
-                if(cleanwords[cw].contexts.length < choice.contexts.length)
-                    choice = cleanwords[cw];
+                if(cleanWords[cw].contexts.length < choice.contexts.length)
+                    choice = cleanWords[cw];
             }
         }
 
         if(choice is null)
             return "";
 
-        return say_topic(choice.contexts[uniform(0, $)].name);
+        return sayTopic(choice.contexts[uniform(0, $)].name);
     }
 }

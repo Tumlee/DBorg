@@ -63,35 +63,35 @@ class Word
 //Returns the argument with leading and trailing
 //punctuation stripped off.
 //==============================================
-string strip_punct(string word)
+string stripPunct(string word)
 {
     //Find the first and last characters that aren't punctuation.
-    int first_letter = word.length;
-    int last_letter = word.length;
+    int firstLetter = word.length;
+    int lastLetter = word.length;
 
     foreach(i; 0 .. word.length)
     {
         if(!isPunctuation(word[i]))
         {
-            last_letter = i;
+            lastLetter = i;
 
-            if(first_letter == word.length)
-                first_letter = i;
+            if(firstLetter == word.length)
+                firstLetter = i;
         }
     }
 
     //No actual letters have been found?
-    if(last_letter == word.length)
+    if(lastLetter == word.length)
         return "";
 
-    return word[first_letter .. last_letter + 1].toLower();
+    return word[firstLetter .. lastLetter + 1].toLower;
 }
 
 //==========================================
 //Takes a line and converts it into an array
 //of lowercase words.
 //==========================================
-string[] split_sentence(string input)
+string[] splitSentence(string input)
 {
     return input.toLower.split;
 }
