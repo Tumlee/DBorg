@@ -118,7 +118,7 @@ class DBorg
         auto outLine = outWords.joiner(" ").array;
 
         //Make that first character uppercase.
-        outLine[0] = outLine[0].toUpper();
+        outLine[0] = std.ascii.toUpper(outLine[0]);
 
         return outLine.to!string();
     }
