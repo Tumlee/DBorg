@@ -1,0 +1,9 @@
+{
+	"name": "dborg",
+    "targetPath": "bin",
+	"description": "Markovian chatbot.",
+	"copyright": "Copyright © 2014, Thomas Lee Gann",
+	"authors": ["tumlee"],
+	"dependencies": {
+	}
+}

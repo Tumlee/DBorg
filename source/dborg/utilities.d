@@ -1,5 +1,7 @@
 //This file contains various utilty classes
 //that are used by the DBorg class.
+module dborg.utilities;
+
 public import std.algorithm;
 public import std.range;
 public import std.string;
@@ -66,8 +68,8 @@ class Word
 string stripPunct(string word)
 {
     //Find the first and last characters that aren't punctuation.
-    int firstLetter = word.length;
-    int lastLetter = word.length;
+    auto firstLetter = word.length;
+    auto lastLetter = word.length;
 
     foreach(i; 0 .. word.length)
     {

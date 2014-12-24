@@ -1,7 +1,7 @@
 import std.stdio;
 import std.algorithm;
 import std.range;
-import DBorg;
+import dborg.bot;
 
 string getParm(string args[], string name)
 {

@@ -1,4 +1,6 @@
-import DBorgUtilities;
+module dborg.bot;
+
+import dborg.utilities;
 import std.random;
 
 //======================================================
