@@ -7,7 +7,7 @@ import dborg.bot;
 //Returns the value of the given command line parameter (defined
 //as the parm directly following the one that matches 'name').
 //==============================================================
-string getParm(string args[], string name)
+string getParm(string[] args, string name)
 {
     foreach(a; 1 .. args.length - 1)
     {
@@ -21,7 +21,7 @@ string getParm(string args[], string name)
 //=============================================================
 //Returns true if the given parameter is in the parameter list.
 //=============================================================
-bool getSwitch(string args[], string name)
+bool getSwitch(string[] args, string name)
 {
     return args[1 .. $].canFind(name);
 }
@@ -79,7 +79,7 @@ bool saveLines(DBorg bot, string fileName)
     return true;
 }
 
-void main(string args[])
+void main(string[] args)
 {
     auto bot = new DBorg;
 
