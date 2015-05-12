@@ -43,11 +43,9 @@ bool loadLines(DBorg bot, string fileName)
     {
         return false;
     }
-
-    string line;
-
+    
     //Learn each line in the file.
-    while((line = botFile.readln()) !is null)
+    foreach(line; botFile.byLineCopy)
         bot.learn(line);
 
     botFile.close();
